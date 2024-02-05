@@ -22,7 +22,7 @@ async function logout() {
 
 <template>
   <div class="page">
-    test
+    tests
     <br />
     <button @click="logout()">Logout</button>
   </div>
