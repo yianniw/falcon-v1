@@ -15,7 +15,8 @@ watchEffect(async () => {
 <template>
   <div>
     <Login v-if="currentView === 'login'"/>
-    <Register v-if="currentView === 'register'"/>
+    <!-- <Register v-if="currentView === 'register'"/> -->
+    <Register />
   </div>
 </template>
 
