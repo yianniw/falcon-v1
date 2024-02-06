@@ -4,15 +4,13 @@
     <div class="page-wrapper">
       <slot />
     </div>
-    
   </div>
 </template>
 
 <style scoped>
 .page-wrapper {
   margin-top: 16px;
-  margin-inline: auto;
-  width: 95vw;
+  margin-inline: 16px;
 }
 .navbar {
   width: 100%;

@@ -21,7 +21,7 @@ const errorMessage = ref();
 
 const cameraReady = ref(false);
 
-async function paintTracking([qrCode]: any, ctx: CanvasRenderingContext2D) {
+function paintTracking([qrCode]: any, ctx: CanvasRenderingContext2D) {
   const { boundingBox: { x, y, width, height } } = qrCode;
   ctx.lineWidth = 4;
   ctx.strokeStyle = '#007bff';
@@ -97,10 +97,11 @@ function hideDialog() {
   overflow: hidden;
   border-radius: var(--border-radius);
   font-size: 0px;
-  width: 95vw;
+  width: 100%;
   height: 95vw;
   max-height: 80vh;
   box-shadow: var(--box-shadow);
+  aspect-ratio: 1/1;
 }
 
 .camera-indicator {
