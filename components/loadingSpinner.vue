@@ -8,7 +8,6 @@
 
 <style scoped>
 .lds-dual-ring {
-  display: inline-block;
   width: 80px;
   height: 80px;
 }
@@ -20,7 +19,7 @@
   display: block;
   width: var(--spinner-size);
   height: var(--spinner-size);
-  margin: 8px;
+  /* margin: 8px; */
   border-radius: 50%;
   border: 6px solid var(--spinner-color);
   border-color: var(--spinner-color) transparent var(--spinner-color) transparent;
