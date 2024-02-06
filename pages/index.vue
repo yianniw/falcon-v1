@@ -3,15 +3,15 @@ const { auth } = useSupabaseClient();
 const user = ref();
 
 onMounted(async () => {
-  const sessionResult = await auth.getSession();
-  if(!sessionResult.data.session) return;
-  const user_id = sessionResult.data.session.user.id;
+  const { data } = await auth.getUser();
+  if(!data?.user) return;
 
-  let data = await $fetch('/api/getUser', { method: 'POST', body: { id: user_id } });
-  if(!data) {
-    data = await $fetch('/api/createUser', { method: 'POST', body: { id: user_id } });
-  }
-  user.value = data;
+  const dbUser =
+    await $fetch('/api/getUser', { method: 'POST', body: { id: data.user.id } }) ||
+    await $fetch('/api/createUser', { method: 'POST', body: { id: data.user.id } });
+
+  user.value = dbUser;
+  console.log(user.value);
 });
 
 async function logout() {
@@ -25,6 +25,7 @@ async function logout() {
     tests
     <br />
     <button @click="logout()">Logout</button>
+    <NuxtLink to="/scan">scan</NuxtLink>
   </div>
 </template>
 
