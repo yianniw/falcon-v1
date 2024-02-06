@@ -22,8 +22,7 @@ async function logout() {
 
 <template>
   <div class="page">
-    tests
-    <br />
+    <QRCode v-if="user" :value="user.user_id" />
     <button @click="logout()">Logout</button>
     <NuxtLink to="/scan">scan</NuxtLink>
   </div>

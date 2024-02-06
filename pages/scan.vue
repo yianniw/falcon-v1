@@ -68,22 +68,19 @@ function hideDialog() {
 <template>
   <div>
     <div class="camera-wrapper">
+      <LoadingSpinner class="center"/>
       <QrcodeStream
         :paused="isPaused"
         :track="paintTracking"
         @camera-on="cameraReady = true"
         @detect="onDetect"
-      >
-        <div v-if="!cameraReady" class="camera-indicator">
-          <LoadingSpinner />
-        </div>
-      </QrcodeStream>
+      />
     </div>
     
     <button @click="showDialog()">open dialog</button>
     <dialog ref="dialog">
       <div class="dialog-content">
-        <LoadingSpinner v-if="isLoading" class="spinner"/>
+        <LoadingSpinner v-if="isLoading" />
         <span v-else-if="user?.name">{{ user.name }}</span>
         <span v-else-if="errorMessage" class="error">{{ errorMessage }}</span>
         <button @click="hideDialog()">continue</button>
@@ -94,6 +91,7 @@ function hideDialog() {
 
 <style scoped>
 .camera-wrapper {
+  position: relative;
   overflow: hidden;
   border-radius: var(--border-radius);
   font-size: 0px;
@@ -104,8 +102,11 @@ function hideDialog() {
   aspect-ratio: 1/1;
 }
 
-.camera-indicator {
-  text-align: center;
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 dialog {

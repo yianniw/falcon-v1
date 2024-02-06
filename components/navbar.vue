@@ -1,5 +1,6 @@
 <script setup lang="ts">
 // TODO: disable buttons at '/login' route
+const overlayActive = ref(false);
 </script>
 
 <template>
@@ -10,9 +11,13 @@
       </NuxtLink>
     </div>
     <div class="item title">title</div>
-    <div class="item menu-button">
+    <div class="item menu-button" @click="overlayActive=true">
       <Icon name="charm:menu-hamburger" size="48px"/>
     </div>
+
+    <OverlayMenu
+      :show=overlayActive
+      @hide="overlayActive=false" />
   </div>
 </template>
 
@@ -38,5 +43,9 @@ a {
 .title {
   font-size: 32px;
   margin-inline: auto;
+}
+
+.menu-button {
+  cursor: pointer;
 }
 </style>
