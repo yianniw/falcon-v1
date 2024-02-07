@@ -13,5 +13,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <img :src="qrString" />
+  <img :src="qrString" class="qr-string"/>
 </template>
+
+<style scoped>
+.qr-string { display: block; }
+</style>

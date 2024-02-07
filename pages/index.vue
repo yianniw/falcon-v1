@@ -1,9 +1,10 @@
 <script setup lang="ts">
-const { auth } = useSupabaseClient();
 const user = ref();
 
 onMounted(async () => {
+  const { auth } = useSupabaseClient();
   const { data } = await auth.getUser();
+
   if(!data?.user) return;
 
   const dbUser =
@@ -11,25 +12,23 @@ onMounted(async () => {
     await $fetch('/api/createUser', { method: 'POST', body: { id: data.user.id } });
 
   user.value = dbUser;
-  console.log(user.value);
-});
 
-async function logout() {
-  const { error } = await auth.signOut();
-  await navigateTo('/login');
-}
+  useAuth().value = await $fetch('/api/checkUserAuth', {
+    method: 'POST',
+    body: { id: data.user.id }
+  });
+  console.log(user.value, 'admin =', useAuth().value);
+});
 </script>
 
 <template>
-  <div class="page">
-    <QRCode v-if="user" :value="user.user_id" />
-    <button @click="logout()">Logout</button>
-    <NuxtLink to="/scan">scan</NuxtLink>
+  <div class="page test">
+    <MemberCard v-if="user" :user="user" />
   </div>
 </template>
 
 <style scoped>
 .page {
-  background-color: red;
+
 }
 </style>

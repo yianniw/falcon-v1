@@ -1,21 +1,40 @@
 <script setup lang="ts">
 // https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_overlay2
 defineProps(['show']);
-defineEmits(['hide']);
+const emit = defineEmits(['hide']);
+
+const { auth } = useSupabaseClient();
+
+function theme() {
+  emit('hide');
+  toggleTheme();
+}
+
+async function logout() {
+  emit('hide');
+  useAuth().value = false;
+  await auth.signOut();
+  await navigateTo('/login');
+}
 </script>
 
 <template>
   <div class="overlay" :style="{ height: `${show ? '100%' : '0%'}` }">
     <div class="navbar">
-      <div class="item menu-button" @click="$emit('hide');">
+      <div class="item menu-button" @click="$emit('hide')">
         <Icon name="charm:menu-hamburger" size="48px"/>
       </div>
     </div>
     <div class="overlay-content">
+      <NuxtLink v-if="useAuth().value"
+        to="/scan"
+        @click="$emit('hide')"
+      >
+        scan
+      </NuxtLink>
+      <a href="" @click.prevent="theme()">theme</a>
       <a href="#">about</a>
-      <a href="#">Services</a>
-      <a href="#">Clients</a>
-      <a href="#">Contact</a>
+      <a href="#" @click="logout()">logout</a>
     </div>
   </div>
 </template>
@@ -38,6 +57,7 @@ defineEmits(['hide']);
 .menu-button {
   cursor: pointer;
   margin-left: auto;
+  color: aliceblue;
 }
 
 .overlay {
@@ -48,7 +68,7 @@ defineEmits(['hide']);
   top: 0;
   left: 0;
   background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0, 0.9);
+  background-color: rgba(0,0,0, 0.8);
   overflow-y: hidden;
   transition: 0.5s;
 }

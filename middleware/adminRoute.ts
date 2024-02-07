@@ -7,4 +7,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     body: { id: data.user.id }
   });
   if(!userAuth) return navigateTo('/');
+  
+  useAuth().value = true;
 });

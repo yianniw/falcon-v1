@@ -1,0 +1,1 @@
+export const useAuth = () => useState<boolean>('auth', () => false);
