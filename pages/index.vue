@@ -22,13 +22,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="page test">
+  <div class="page">
     <MemberCard v-if="user" :user="user" />
+    <QRCode v-if="user" :value="user.user_id" class="qrcode"/>
   </div>
 </template>
 
 <style scoped>
-.page {
-
+.qrcode {
+  margin-top: 30cqw;
+  margin-inline: auto;
+  height: 30cqw;
 }
 </style>

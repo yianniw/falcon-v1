@@ -1,13 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500&display=swap');
 
-:root[data-theme="light"] {
-  --text: #0c1118;
-  --background: #e2eaf3;
-  --primary: #27405d;
-  --secondary: #86a8d0;
-  --accent: #3b6ba5;
-  --warning: #ae2012;
-}
 :root {
   --text: #e7ecf3;
   --background: #0c141d;
@@ -15,6 +7,34 @@
   --secondary: #2f5279;
   --accent: #5a8ac4;
   --warning: #e76f51;
+}
+
+:root[data-theme="1"] {
+  --text: #0c1118;
+  --background: #e2eaf3;
+  --primary: #27405d;
+  --secondary: #86a8d0;
+  --accent: #3b6ba5;
+  --warning: #ae2012;
+}
+
+/* https://colorhunt.co/palette/0926351b42425c83749ec8b9 */
+:root[data-theme="2"] {
+  --text: aliceblue;
+  --background: #092635;
+  --primary: #5C8374;
+  --secondary: #1B4242;
+  --accent: #9EC8B9;
+  --warning: #BE3144;
+}
+
+:root[data-theme="3"] {
+  --text: aliceblue;
+  --background: #161A30;
+  --primary: #B6BBC4;
+  --secondary: #31304D;
+  --accent: #F0ECE5;
+  --warning: #F6B17A;
 }
 
 :root {

@@ -1,12 +1,12 @@
 export default function setInitialTheme() {
   if(!localStorage) return;
   
-  function getTheme(): string {
+  function getPreviousTheme(): string {
     const themeStr = localStorage.getItem('theme');
-    if(!themeStr) return 'dark';
+    if(!themeStr) return '0';
     return JSON.parse(themeStr);
   }
 
-  const currentTheme = getTheme();
+  const currentTheme = getPreviousTheme();
   document?.documentElement.setAttribute('data-theme', currentTheme);
 }
