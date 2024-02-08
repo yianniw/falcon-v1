@@ -6,7 +6,7 @@ export default defineEventHandler(async (event) => {
 
   const { data, error } = await client.from('admins')
     .select()
-    .eq('user_id', body.id)
+    .eq('user_id', body.user_id)
     .maybeSingle();
 
   return !!data;

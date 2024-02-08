@@ -8,14 +8,14 @@ onMounted(async () => {
   if(!data?.user) return;
 
   const dbUser =
-    await $fetch('/api/getUser', { method: 'POST', body: { id: data.user.id } }) ||
-    await $fetch('/api/createUser', { method: 'POST', body: { id: data.user.id } });
+    await $fetch('/api/getUser', { method: 'POST', body: { user_id: data.user.id } }) ||
+    await $fetch('/api/createUser', { method: 'POST', body: { user_id: data.user.id } });
 
   user.value = dbUser;
 
   useAuth().value = await $fetch('/api/checkUserAuth', {
     method: 'POST',
-    body: { id: data.user.id }
+    body: { user_id: data.user.id }
   });
   console.log(user.value, 'admin =', useAuth().value);
 });
@@ -24,7 +24,7 @@ onMounted(async () => {
 <template>
   <div class="page">
     <MemberCard v-if="user" :user="user" />
-    <QRCode v-if="user" :value="user.user_id" class="qrcode"/>
+    <QRCode v-if="user" :value="user.user_id" class="qrcode" />
   </div>
 </template>
 
@@ -32,6 +32,6 @@ onMounted(async () => {
 .qrcode {
   margin-top: 30cqw;
   margin-inline: auto;
-  height: 30cqw;
+  height: 50cqw;
 }
 </style>

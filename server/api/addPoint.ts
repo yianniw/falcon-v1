@@ -1,31 +1,40 @@
 import { serverSupabaseServiceRole } from '#supabase/server';
 import { SupabaseClient } from '@supabase/supabase-js';
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event): Promise<User> => {
   const body = await readBody(event);
   const client = serverSupabaseServiceRole(event);
 
-  const callee = await client.from('admins')
+  const calleeResult = await client.from('admins')
     .select()
     .eq('user_id', body.callee)
     .maybeSingle();
-  if(!callee.data) throw createError({ statusCode: 403, statusMessage: 'Forbidden' });
+  if(!calleeResult.data) throw createError({ statusCode: 403, statusMessage: 'Forbidden' });
     
-  const user = await client.from('users')
+  const userResult = await client.from('users')
     .select()
-    .eq('user_id', body.id)
+    .eq('user_id', body.user_id)
     .maybeSingle();
-  if(!user.data) throw createError({ statusCode: 404, statusMessage: 'User Not Found' });
-  
-  const userResult = await addPoint(user.data, client);
-  return userResult;
+  if(!userResult.data) throw createError({ statusCode: 404, statusMessage: 'User Not Found' });
+
+  const user: User = userResult.data;
+  const callee: Admin = calleeResult.data;
+
+  return await addPoint(user.user_id, callee.user_id, client);
 });
 
-async function addPoint(user: any, client: SupabaseClient) {
-  const { data, error } = await client.from('users')
-    .update({ points: user.points + 1 })
-    .eq('user_id', user.user_id)
+async function addPoint(user_id: string, callee_id: string, client: SupabaseClient): Promise<User> {
+  await client.from('points')
+    .insert({
+      user_id: user_id,
+      issued_by: callee_id,
+      created_at: new Date().toISOString()
+    });
+
+  const updatedUser = await client.from('users')
     .select()
+    .eq('user_id', user_id)
     .maybeSingle();
-  return data;
+
+  return updatedUser.data;
 }

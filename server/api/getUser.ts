@@ -1,13 +1,21 @@
 import { serverSupabaseServiceRole } from '#supabase/server'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async (event): Promise<User | null> => {
   const body = await readBody(event);
   const client = serverSupabaseServiceRole(event);
 
-  const { data, error} = await client.from('users')
+  const userResult = await client.from('users')
     .select()
-    .eq('user_id', body.id)
+    .eq('user_id', body.user_id)
     .maybeSingle();
+  if(!userResult.data) return null;
 
-  return data;
+  const pointsResult = await client.from('points')
+    .select('*', { count: 'exact' })
+    .eq('user_id', body.user_id);
+
+  const user: User = userResult.data;
+  user.points = pointsResult.count || 0;
+    
+  return user;
 });

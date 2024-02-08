@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   const userAuth = await $fetch('/api/checkUserAuth', {
     method: 'POST',
-    body: { id: data.user.id }
+    body: { user_id: data.user.id }
   });
   if(!userAuth) return navigateTo('/');
   

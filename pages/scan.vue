@@ -35,7 +35,7 @@ async function onDetect([qrCode]: any) {
     showDialog();
     const userResult = await $fetch('/api/addPoint', {
       method: 'POST',
-      body: { id: qrCode.rawValue, callee: authUser.value.id }
+      body: { user_id: qrCode.rawValue, callee: authUser.value.id }
     });
     user.value = userResult;
     isLoading.value = false;

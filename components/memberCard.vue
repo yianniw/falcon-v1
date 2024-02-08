@@ -12,6 +12,7 @@ function getRandomRotation() {
 <template>
     <div class="scene">
       <div @click="isFlipped = !isFlipped" :class="`card ${ isFlipped ? 'is-flipped' : '' }`">
+
         <div class="card-face front">
           <div class="heading">
             OFFICIAL MEMBER
@@ -23,10 +24,11 @@ function getRandomRotation() {
             <img src="/img/logo256.png" class="item"/>
           </div>
         </div>
+
         <div class="card-face back">
           <div class="heading">
             Name:<div class="line"><span class="name">{{ user.name }}</span></div>
-            <div v-if="user.points > 20" class="number">#{{ Math.floor(user.points / 20) }}</div>
+            <div v-if="user.points > 20" class="number">#{{ Math.floor(user.points / 20) + 1 }}</div>
           </div>
           <div class="content">
             <div v-for="item in 20" class="item" :key="item">
@@ -39,6 +41,7 @@ function getRandomRotation() {
             </div>
           </div>
         </div>
+        
       </div>
     </div>
 </template>
